@@ -1,4 +1,4 @@
-import { Space, Button, Layout, Menu, theme } from "antd";
+import { Typography, Space, Button, Layout, Menu, theme } from "antd";
 import { Outlet, NavLink, useLocation } from "react-router-dom";
 import { isNil } from "lodash/fp";
 import { logoutRequest } from "../store/slices/session";
@@ -87,17 +87,21 @@ function Root() {
         <Outlet />
       </Layout.Content>
 
-      <Layout.Footer>
-        <Space wrap>
-          <Button type="dashed" htmlType="button" onClick={loginParent}>
-            Parent
-          </Button>
+      {process.env.NODE_ENV === "development" && (
+        <Layout.Footer>
+          <Space wrap>
+            <Typography.Text>Development Toolbar</Typography.Text>
 
-          <Button type="dashed" htmlType="button" onClick={loginAdmin}>
-            Admin
-          </Button>
-        </Space>
-      </Layout.Footer>
+            <Button type="dashed" htmlType="button" onClick={loginParent}>
+              Parent
+            </Button>
+
+            <Button type="dashed" htmlType="button" onClick={loginAdmin}>
+              Admin
+            </Button>
+          </Space>
+        </Layout.Footer>
+      )}
     </Layout>
   );
 }

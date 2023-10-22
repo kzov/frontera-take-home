@@ -17,7 +17,7 @@ function Login() {
 
   const dispatch = useAppDispatch();
 
-  const { error } = useAppSelector((state) => state.session);
+  const { error, loading } = useAppSelector((state) => state.session);
 
   const login = (values: FieldType) => {
     dispatch({
@@ -61,8 +61,8 @@ function Login() {
         </Form.Item>
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button type="primary" htmlType="submit">
-            Submit
+          <Button disabled={loading} type="primary" htmlType="submit">
+            {loading ? "Submitting..." : "Submit"}
           </Button>
         </Form.Item>
       </Form>

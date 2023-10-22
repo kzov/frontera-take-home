@@ -94,7 +94,12 @@ function Dashboard() {
           )}
         </div>
 
-        <pre>{JSON.stringify(userInfo, null, 2)}</pre>
+        {process.env.NODE_ENV === "development" && (
+          <>
+            <Typography.Text>Development Splat</Typography.Text>
+            <pre>{JSON.stringify(userInfo, null, 2)}</pre>
+          </>
+        )}
       </>
     );
   }

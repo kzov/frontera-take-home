@@ -30,7 +30,7 @@ function Register() {
 
   const dispatch = useAppDispatch();
 
-  const { error } = useAppSelector((state) => state.userAdd);
+  const { loading, error } = useAppSelector((state) => state.userAdd);
 
   const register = (values: FieldType) => {
     const dob = dayjs(values.dob, dateFormat).format("YYYY-MM-DD");
@@ -42,17 +42,22 @@ function Register() {
         dob,
       },
     });
+
+    form.resetFields();
   };
 
   const onFailure = () => {
     dispatch(registerFailure("error"));
   };
 
+  const [form] = Form.useForm();
+
   return (
     <>
-      {!isNil(error) && <p>Login failed</p>}
+      {!isNil(error) && <p>Registration failed</p>}
 
       <Form
+        form={form}
         name="basic"
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 16 }}
@@ -77,7 +82,7 @@ function Register() {
         </Form.Item>
 
         <Form.Item<FieldType>
-          label="Password"
+          label="Confirm Password"
           name="confirmPassword"
           rules={[{ required: true, message: "Please confirm your password!" }]}
         >
@@ -139,8 +144,8 @@ function Register() {
         </Form.Item>
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button type="primary" htmlType="submit">
-            Submit
+          <Button disabled={loading} type="primary" htmlType="submit">
+            {loading ? "Submitting..." : "Submit"}
           </Button>
         </Form.Item>
       </Form>
